@@ -6,7 +6,7 @@ using AGM = DeathsDoor.AlternativeGameModes;
 namespace DeathsDoor.Plando;
 
 [Bep.BepInPlugin("deathsdoor.plando", "Plando", "1.0.0.0")]
-internal class CheckLoggerPlugin : Bep.BaseUnityPlugin
+internal class PlandoPlugin : Bep.BaseUnityPlugin
 {
     public void Start()
     {
