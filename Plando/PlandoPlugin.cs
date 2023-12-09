@@ -1,9 +1,9 @@
 using Bep = BepInEx;
 using HL = HarmonyLib;
-using IC = DeathsDoor.ItemChanger;
-using AGM = DeathsDoor.AlternativeGameModes;
+using IC = DDoor.ItemChanger;
+using AGM = DDoor.AlternativeGameModes;
 
-namespace DeathsDoor.Plando;
+namespace DDoor.Plando;
 
 [Bep.BepInPlugin("deathsdoor.plando", "Plando", "1.0.0.0")]
 internal class PlandoPlugin : Bep.BaseUnityPlugin
