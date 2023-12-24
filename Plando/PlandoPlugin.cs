@@ -9,6 +9,8 @@ using IO = System.IO;
 namespace DDoor.Plando;
 
 [Bep.BepInPlugin("deathsdoor.plando", "Plando", "1.0.0.0")]
+[Bep.BepInDependency("deathsdoor.alternativegamemodes", "1.0")]
+[Bep.BepInDependency("deathsdoor.itemchanger", "1.0")]
 internal class PlandoPlugin : Bep.BaseUnityPlugin
 {
     public void Start()
