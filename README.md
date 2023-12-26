@@ -27,5 +27,5 @@ This mod uses [AlternativeGameModes][] and [ItemChanger][] to provide almost all
 functionality. Their assemblies, as well as the game's, should be placed in the
 `Plando/Deps` directory before building the mod.
 
-[AlternativeGameModes][]: https://github.com/dpinela/DeathsDoor.AlternativeGameModes
-[ItemChanger][]: https://github.com/dpinela/DeathsDoor.ItemChanger
+[AlternativeGameModes]: https://github.com/dpinela/DeathsDoor.AlternativeGameModes
+[ItemChanger]: https://github.com/dpinela/DeathsDoor.ItemChanger
