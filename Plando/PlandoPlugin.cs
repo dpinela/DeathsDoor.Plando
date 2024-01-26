@@ -8,16 +8,16 @@ using IO = System.IO;
 
 namespace DDoor.Plando;
 
-[Bep.BepInPlugin("deathsdoor.plando", "Plando", "1.0.0.0")]
+[Bep.BepInPlugin("deathsdoor.plando", "Plando", "1.1.0.0")]
 [Bep.BepInDependency("deathsdoor.alternativegamemodes", "1.0")]
-[Bep.BepInDependency("deathsdoor.itemchanger", "1.0")]
+[Bep.BepInDependency("deathsdoor.itemchanger", "1.2")]
 internal class PlandoPlugin : Bep.BaseUnityPlugin
 {
     public void Start()
     {
         var plandoFiles = InstalledPlandoFiles();
         var plandos = plandoFiles
-            .Select(f => new Plando {
+            .Select(f => new PlandoFile {
                 FileName = f,
                 Name = IO.Path.GetFileNameWithoutExtension(f)
             })
@@ -31,9 +31,23 @@ internal class PlandoPlugin : Bep.BaseUnityPlugin
             {
                 try
                 {
-                    var placements = ReadPlando(plando.FileName);
+                    var p = Plando.Read(plando.FileName, Logger.LogWarning);
                     var data = IC.SaveData.Open();
-                    data.Placements.AddRange(placements);
+                    foreach (var pl in p.Placements)
+                    {
+                        data.Place(item: pl.ItemName, location: pl.LocationName);
+                    }
+                    if (p.StartNight)
+                    {
+                        GameSave.currentSave.SetNightState(true);
+                    }
+                    if (p.StartWeapon != "sword")
+                    {
+                        data.StartingWeapon = p.StartWeapon;
+                        // Actually equip the chosen weapon.
+                        // (IC does not do this for you)
+                        GameSave.currentSave.weaponId = p.StartWeapon;
+                    }
                 }
                 catch (System.Exception err)
                 {
@@ -52,38 +66,9 @@ internal class PlandoPlugin : Bep.BaseUnityPlugin
         return IO.Directory.GetFiles(pluginDir, "*.ddplando", IO.SearchOption.AllDirectories);
     }
 
-    private struct Plando
+    private struct PlandoFile
     {
         internal string Name;
         internal string FileName;
-    }
-
-    private Collections.List<IC.Placement> ReadPlando(string filename)
-    {
-        using var file = IO.File.OpenText(filename);
-        var rows = new Collections.List<IC.Placement>();
-        var lineNum = 0;
-        while (true)
-        {
-            lineNum++;
-            var line = file.ReadLine();
-            if (line == null)
-            {
-                return rows;
-            }
-            var at = line.IndexOf('@');
-            if (at == -1)
-            {
-                if (!string.IsNullOrWhiteSpace(line))
-                {
-                    Logger.LogWarning($"syntax error on {filename}:{lineNum}: missing @");
-                }
-                continue;
-            }
-            rows.Add(new IC.Placement {
-                ItemName = line.Substring(0, at).Trim(),
-                LocationName = line.Substring(at + 1).Trim()
-            });
-        }
     }
 }
