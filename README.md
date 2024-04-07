@@ -14,6 +14,22 @@ There are a few examples of working plandos in the `Examples` directory.
 
 [ic-pdef]: https://github.com/dpinela/DeathsDoor.ItemChanger/blob/main/ItemChanger/Predefined.cs
 
+## Special directives
+
+Instead of an item placement, a line may instead contain one of a few directives, each of
+which apply a specific one-off effect to the game:
+
+- `#start-night`: starts the game at night, instead of during the day as is the default.
+- `#start-weapon-daggers`: changes the starting weapon to be the Rogue Daggers instead of the Reaper's Sword.
+- `#start-weapon-umbrella`: changes the starting weapon to the Discarded Umbrella.
+- `#start-weapon-greatsword`: changes the starting weapon to the Repaer's Greatsword.
+- `#start-weapon-hammer`: changes the starting weapon to the Thunder Hammer.
+
+Note that if you change the starting weapon, the
+Reaper's Sword is not given at the start of the game;
+you must explicity place it at some location if it
+is to be obtainable.
+
 # How to play a plando
 
 To play a plando, place its `.ddplando` file anywhere inside the Plugins directory in your
